@@ -27,13 +27,12 @@ mdiff = MoveDifferential(OUTPUT_A, OUTPUT_D, driveTire, distance_from_center_to_
 
 """
 movestraight moves the robot straight in the specified direction for the specified distance
-TravelDistance is measured in inches
+TravelDistance is measured in centimeters
 True = forward
 False = Reverse
 """
-
 def moveStraight(TravelDistance,direction):
-    TravelDistance = TravelDistance*10 + 3.175  #Convert inches to mm   CHANGE CONVERSION FROM CM TO MM
+    TravelDistance = TravelDistance*10 + 3.175  #Convert cm to mm
     mdiff.odometry_start()    #Start odometry. DO NOT REMOVE
 
     travel_speed = 30   #Set the robot's speed OG=30
@@ -48,10 +47,22 @@ def moveStraight(TravelDistance,direction):
 
     mdiff.odometry_stop() #End odometry       DO NOT REMOVE
 
+
+"""
+calibrateGyro calibrates the Gyro sensor and sets its rotation to 0
+Use only once in program
+"""
 def calibrateGyro():
     gyro.calibrate()
     gyro.reset()
 
+
+"""
+TurnToAngle turns to the inputted angle
+The initial turn is at 10 speed to the right
+The secondary turn is at 5 speed to the left
+The angle of the gyro sensor is printed to the screen
+"""
 def turnToAngle(angle):
     time.sleep(.1)
     while gyro.angle<angle:
@@ -67,10 +78,3 @@ def turnToAngle(angle):
     motorR.stop()
     time.sleep(.1)
     print("{0:.2f} degrees".format(gyro.angle))
-
-    
-
-
-
-
-

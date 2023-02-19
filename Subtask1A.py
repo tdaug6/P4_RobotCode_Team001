@@ -11,4 +11,14 @@ def Subtask1A(Laps, TravelDistance):
         time.sleep(3)
 
 
-Subtask1A(2,5)
+
+#------------------------------------------------------------------#
+#               THIS IS FOR SUBTASK 1A
+
+# This one goes forward, then reverse
+
+laps = 3 #ENTER THE NUMBER OF LAPS HERE (1 lap = 1 forward and 1 back)
+distance = 91 #ENTER THE DISTANCE TO TRAVEL HERE (IN CM)
+
+Subtask1A(laps,distance)
+#------------------------------------------------------------------#
