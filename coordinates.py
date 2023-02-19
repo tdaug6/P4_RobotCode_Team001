@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-from ev3dev2.motor import OUTPUT_A, OUTPUT_B, MoveDifferential, SpeedRPM
+from ev3dev2.motor import OUTPUT_A, OUTPUT_D, MoveDifferential, SpeedRPM
 from ev3dev2.wheel import EV3Tire
 STUD_MM = 8
 # test with a robot that:
 # - uses the standard wheels known as EV3Tire
 # - wheels are 16 studs apart
-mdiff = MoveDifferential(OUTPUT_A, OUTPUT_B, EV3Tire, 16 * STUD_MM)
+mdiff = MoveDifferential(OUTPUT_A, OUTPUT_D, EV3Tire, 16 * STUD_MM)
 
 # Enable odometry
 mdiff.odometry_start()
