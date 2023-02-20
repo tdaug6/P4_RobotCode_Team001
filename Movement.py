@@ -1,10 +1,10 @@
 #!usr/bin/env python3
 from ev3dev2.motor import *
 from ev3dev2.wheel import *
-from customWheel import *
 from ev3dev2.sensor import *
 from ev3dev2.sensor.lego import *
 import ev3dev2.auto as ev3
+from customWheel import *
 import time
 import os
 os.system('setfont Lat15-TerminusBold32x16')
@@ -33,7 +33,7 @@ False = Reverse
 """
 def moveStraight(TravelDistance,direction):
     TravelDistance = TravelDistance*10 + 3.175  #Convert cm to mm
-    mdiff.odometry_start()    #Start odometry. DO NOT REMOVE
+    mdiff.odometry_start()    #Start odometry.  DO NOT REMOVE
 
     travel_speed = 30   #Set the robot's speed OG=30
 
@@ -64,17 +64,27 @@ The secondary turn is at 5 speed to the left
 The angle of the gyro sensor is printed to the screen
 """
 def turnToAngle(angle):
-    time.sleep(.1)
+    time.sleep(.1)  #Prepare to turn
+
+    #Turn left while the angle is less than the inputted angle
     while gyro.angle<angle:
         motorL.on(10)
         motorR.on(-10)
+
+    #Stop the motors to get more accurate results
     motorL.stop()
     motorR.stop()
     time.sleep(0.25)
+
+    #Turn right while the angle is greater than the inputted angle
     while gyro.angle>angle:
         motorL.on(-5)
         motorR.on(5)
+
+    #Stop the motors to get more accurate results
     motorL.stop()
     motorR.stop()
     time.sleep(.1)
+
+    #Display the gyro's angle to the screen
     print("{0:.2f} degrees".format(gyro.angle))

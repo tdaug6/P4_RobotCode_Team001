@@ -24,7 +24,7 @@ def Subtask1B(TravelDistance,Laps):
 # This one goes forward, turns, and goes forward to starting position
 
 laps = 5 #ENTER THE NUMBER OF LAPS HERE (1 lap = 1 forward, 1 turn, and 1 forward)
-distance = 127 #ENTER THE DISTANCE TO TRAVEL HERE (IN CM)
+distance = 20 #ENTER THE DISTANCE TO TRAVEL HERE (IN CM)
 
 Subtask1B(distance,laps)
 #------------------------------------------------------------------#
