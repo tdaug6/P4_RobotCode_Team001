@@ -6,7 +6,6 @@ class EV3CustomWheel(Wheel):
     def __init__(self):
         Wheel.__init__(self,56,28)
 
-##DO NOT USE##
 class CustomMotorA(Motor):
     def __init__(self):
         Motor.__init__(self,OUTPUT_A)
