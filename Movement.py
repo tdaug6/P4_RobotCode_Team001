@@ -4,7 +4,7 @@ from ev3dev2.wheel import *
 from ev3dev2.sensor import *
 from ev3dev2.sensor.lego import *
 import ev3dev2.auto as ev3
-from customWheel import *
+from customClasses import *
 import time
 import os
 os.system('setfont Lat15-TerminusBold32x16')

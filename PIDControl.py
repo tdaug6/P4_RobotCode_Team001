@@ -5,7 +5,7 @@ import Movement
 from ev3dev2.sensor import*
 from ev3dev2.sensor.lego import*
 import math
-from customWheel import *
+from customClasses import *
 
 # DO NOT USE #
 #This file is a work in progress
