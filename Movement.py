@@ -14,12 +14,12 @@ motorL = LargeMotor(OUTPUT_A)
 motorR = LargeMotor(OUTPUT_D)
 
 #Create custom wheel to match wheel size
-Wheel_height = 56
-Wheel_width = 28
 driveTire = EV3CustomWheel
 
+#This is the distance from the center of the APR to the center of the wheel
 distance_from_center_to_tire = 36.115625
 
+#Create gyro sensor
 gyro = GyroSensor(INPUT_4)
 
 #Create a drivebase for odometry
