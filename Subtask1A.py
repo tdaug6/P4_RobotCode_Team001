@@ -3,10 +3,18 @@ from ev3dev2.motor import *
 from Movement import *
 import time
 
+"""
+Subtask1A is the complete code for the demo Subtask 1A.
+It takes inputs for laps and travel distance (cm).
+This program will go forward and go in reverse.
+"""
 def Subtask1A(Laps, TravelDistance):
+    #For the number of laps...
     for k in range(Laps):
+        #Move forward
         moveStraight(TravelDistance,True)
         time.sleep(1)
+        #Move in reverse
         moveStraight(TravelDistance,False)
         time.sleep(1)
 

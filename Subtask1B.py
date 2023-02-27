@@ -5,16 +5,23 @@ from Movement import *
 import time
 from ev3dev2.sensor import *
 
-
-
+"""
+Subtask1B is the complete code for the demo Subtask 1B.
+It takes inputs for the number of laps and travel distance (cm).
+This program will go forward, turn, and come back.
+"""
 def Subtask1B(TravelDistance,Laps):
+    #Calibrate the gyro sensor
     calibrateGyro()
     time.sleep(2)
     i = 0
-    while i<Laps*2:
+    #While the number of laps is not complete...
+    while i<Laps*2:     #Must be *2 because this only accounts for the first half of the movement
+        #Move forward for the travel distance
         moveStraight(TravelDistance,True)
+        #Turn 180 degrees
         turnToAngle(180 + i*180)
-        i+=1
+        i+=1    #increment counter variable
         time.sleep(1)
 
 
