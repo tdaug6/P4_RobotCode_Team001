@@ -85,6 +85,7 @@ def turnToAngle(angle):
     motorL.stop()
     motorR.stop()
     time.sleep(.1)
-
+    """
     #Display the gyro's angle to the screen
     print("{0:.2f} degrees".format(gyro.angle))
+    """
