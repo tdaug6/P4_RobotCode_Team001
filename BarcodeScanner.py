@@ -1,4 +1,4 @@
-#!usr/bin/env python3
+#!/usr/bin/env python3
 from ev3dev2.sensor import *
 from ev3dev2.sensor.lego import *
 import ev3dev2.auto as ev3
