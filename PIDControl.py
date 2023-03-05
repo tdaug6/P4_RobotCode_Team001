@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import time
 from ev3dev2.motor import *
-import Movement
+from Movement import *
 from ev3dev2.sensor import*
 from ev3dev2.sensor.lego import*
 import math
@@ -10,6 +10,7 @@ from customClasses import *
 # DO NOT USE #
 #This file is a work in progress
 #   do not edit, do not use
+"""
 class pid:
     kP = 0
     kI  = 0
@@ -71,4 +72,73 @@ def moveDistance(TravelDistance,TravelSpeed,HeadingCurrentAngle):
 
     
 moveDistance(50,50,0)
+
+"""
+
+def moveDistance(DISTANCE,SPEED):
+    # Declare objects
+    newWheel = EV3CustomWheel()
+    motorL = CustomMotorA()
+    motorR = CustomMotorD()
+    
+    # Initialize Constants
+    DISTANCE_ROTATION = DriveDistance(DISTANCE,newWheel)    #This is the number of ticks to the motor must rotate to reach the distance
+
+    # Prepare updater variables to enter loop
+    motorLOffset = motorL.position
+    motorROffset = motorR.position
+    motorLPosition = motorL.position - motorLOffset
+    motorRPosition = motorR.position - motorROffset
+
+    gyroAngleOffset = GYRO.angle
+    gyroAngle = GYRO.angle - gyroAngleOffset
+
+
+    # Loop until the distance has been reached
+    while abs(motorLPosition) < DISTANCE_ROTATION and abs(motorRPosition) < DISTANCE_ROTATION:
+        # Reset motor speeds to the inputted speed
+        motorLSpeed = SPEED
+        motorRSpeed = SPEED
+
+        # Update accessor variables
+        gyroAngle = GYRO.angle  #Negative when turning left, positive when turning right
+        motorLPosition = motorL.position - motorLOffset
+        motorRPosition = motorR.position - motorROffset
+
+        # Adjust motor speed by the gyro's angle
+        motorLSpeed -= gyroAngle - gyroAngleOffset
+        motorRSpeed += gyroAngle - gyroAngleOffset
+
+        # Disallow speeds larger than the given speed
+        if motorLSpeed>SPEED:
+            motorLSpeed = SPEED
+        if motorLSpeed < -SPEED:
+            motorLSpeed = -SPEED
+
+        if motorRSpeed>SPEED:
+            motorRSpeed = SPEED
+        if motorRSpeed < -SPEED:
+            motorRSpeed = -SPEED
+
+        # Set motors to calculated speed
+        motorL.on(motorLSpeed)
+        motorR.on(motorRSpeed)
+
+        # for debugging
+        print("{0:.2f} P=".format(motorLPosition))
+        time.sleep(0.001)
+
+    #End
+    motorL.stop()
+    motorR.stop()
+
+
+GYRO = GyroSensor()
+GYRO.reset()
+GYRO.calibrate()
+
+dist = 84 * 2.54
+
+moveDistance(dist,50)
+time.sleep(0.1)
 

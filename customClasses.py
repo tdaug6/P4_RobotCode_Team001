@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from ev3dev2.wheel import *
 from ev3dev2.motor import *
+import math
 
 """
 This class adds a custom wheel size that matches the size of the wheel on our APR.
@@ -9,6 +10,9 @@ The diameter is 56mm and the width is 28mm.
 class EV3CustomWheel(Wheel):
     def __init__(self):
         Wheel.__init__(self,56,28)
+    Wheel_Circumference = 56/10*math.pi*.985
+    Ticks_per_CM = 360.0/Wheel_Circumference
+
 
 """
 The custom classes for A and D initialize the port to either A or D.

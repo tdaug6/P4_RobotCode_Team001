@@ -89,3 +89,6 @@ def turnToAngle(angle):
     #Display the gyro's angle to the screen
     print("{0:.2f} degrees".format(gyro.angle))
     """
+
+def DriveDistance(distance, wheel):
+    return distance * wheel.Ticks_per_CM
