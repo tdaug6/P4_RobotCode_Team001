@@ -133,12 +133,25 @@ def moveDistance(DISTANCE,SPEED):
     motorR.stop()
 
 
+
+# Prepare gyro for program
 GYRO = GyroSensor()
 GYRO.reset()
 GYRO.calibrate()
+time.sleep(2)       # Ensure gyro is calibrated
 
-dist = 84 * 2.54
+#------------------------------------------------------------------#
+#           THIS IS FOR MID-PROJECT REVIEW TESTING
 
-moveDistance(dist,50)
+# This one goes forward for specified inches
+
+distanceInInches = 84   #This stores the distance in INCHES for the travel distance
+movementSpeed = 50      # This stores the speed for the APR
+
+dist = distanceInInches * 2.54  #converts inches to cm
+
+moveDistance(dist,movementSpeed)    #Function call using inputs
 time.sleep(0.1)
+#------------------------------------------------------------------#
+
 
