@@ -76,7 +76,13 @@ moveDistance(50,50,0)
 """
 
 # vvvvvvvv THIS IS FUNCTIONAL CODE vvvvvvvv
+"""
+moveDistance moves the APR a given distance at a specified speed.
+Distance is measured in cm and speed is a percentage out of 100.
 
+This function is designed to correct the APR's x orientation based on the gyro sensor's angle.
+The motor rotation count of the left motor is printed to the screen for debugging purposes.
+"""
 def moveDistance(DISTANCE,SPEED):
     # Declare objects
     newWheel = EV3CustomWheel()
@@ -141,13 +147,13 @@ GYRO = GyroSensor()
 GYRO.reset()
 GYRO.calibrate()
 time.sleep(2)       # Ensure gyro is calibrated
-
+"""
 #------------------------------------------------------------------#
 #           THIS IS FOR MID-PROJECT REVIEW TESTING MOVEMENT
 
 # This one goes forward for specified inches
 
-distanceInInches = 60   #This stores the distance in INCHES for the travel distance
+distanceInInches = 84   #This stores the distance in INCHES for the travel distance
 movementSpeed = 50      # This stores the speed for the APR
 
 dist = distanceInInches * 2.54  #converts inches to cm
@@ -155,15 +161,15 @@ dist = distanceInInches * 2.54  #converts inches to cm
 moveDistance(dist,movementSpeed)    #Function call using inputs
 time.sleep(0.1)
 #------------------------------------------------------------------#
-
-
 """
+
+
 #------------------------------------------------------------------#
 #           THIS IS FOR MID-PROJECT REVIEW TESTING TURNING
 
 # This one goes forward for specified inches
 
-distanceInInches = 60   #This stores the distance in INCHES for the travel distance
+distanceInInches = 12   #This stores the distance in INCHES for the travel distance
 movementSpeed = 50      # This stores the speed for the APR
 
 dist = distanceInInches * 2.54  #converts inches to cm
@@ -173,4 +179,3 @@ turnToAngle(90)     # Turn 90 degrees
 moveDistance(dist,movementSpeed)    #Function call using inputs
 time.sleep(0.1)
 #------------------------------------------------------------------#
-"""

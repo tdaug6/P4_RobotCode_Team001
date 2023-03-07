@@ -10,7 +10,14 @@ The diameter is 56mm and the width is 28mm.
 class EV3CustomWheel(Wheel):
     def __init__(self):
         Wheel.__init__(self,56,28)
+    # This calculates the circumference of the wheel based on the diameter (56mm)
+    # There are a couple of changes made to the basic circumference equation
+    #       1. 56 is in mm, so /10 is used to turn convert it to cm
+    #       2. The distance was slightly too short, so a percentage was used to adjust this value
+    #               Through trial and error 0.985 was determined to be the ideal percentage
     Wheel_Circumference = 56/10*math.pi*.985
+    
+    # Ticks_per_CM is used to get the rotations in another function
     Ticks_per_CM = 360.0/Wheel_Circumference
 
 
