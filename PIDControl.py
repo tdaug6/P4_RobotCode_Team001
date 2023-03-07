@@ -88,6 +88,8 @@ def moveDistance(DISTANCE,SPEED):
     newWheel = EV3CustomWheel()
     motorL = CustomMotorA()
     motorR = CustomMotorD()
+    GYRO = GyroSensor()
+
     
     # Initialize Constants
     DISTANCE_ROTATION = DriveDistance(DISTANCE,newWheel)    #This is the number of ticks to the motor must rotate to reach the distance
@@ -141,13 +143,13 @@ def moveDistance(DISTANCE,SPEED):
     motorR.stop()
 
 
-
+"""
 # Prepare gyro for program
 GYRO = GyroSensor()
 GYRO.reset()
 GYRO.calibrate()
 time.sleep(2)       # Ensure gyro is calibrated
-"""
+
 #------------------------------------------------------------------#
 #           THIS IS FOR MID-PROJECT REVIEW TESTING MOVEMENT
 
@@ -161,7 +163,7 @@ dist = distanceInInches * 2.54  #converts inches to cm
 moveDistance(dist,movementSpeed)    #Function call using inputs
 time.sleep(0.1)
 #------------------------------------------------------------------#
-"""
+
 
 
 #------------------------------------------------------------------#
@@ -179,3 +181,4 @@ turnToAngle(90)     # Turn 90 degrees
 moveDistance(dist,movementSpeed)    #Function call using inputs
 time.sleep(0.1)
 #------------------------------------------------------------------#
+"""
