@@ -90,5 +90,9 @@ def turnToAngle(angle):
     print("{0:.2f} degrees".format(gyro.angle))
     """
 
+"""
+DriveDistance returns the motor rotation value based on the distance given
+Recieves input for distance (in cm) and wheel (used to access its ticks per inches)
+"""
 def DriveDistance(distance, wheel):
     return distance * wheel.Ticks_per_CM
