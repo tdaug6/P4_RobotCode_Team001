@@ -9,6 +9,7 @@ import math
 import Movement
 import time
 from os import *
+from PIDControl import *
 
 #signify start
 spkr = Sound()
@@ -22,22 +23,37 @@ console.set_font(font='Lat15-TerminusBold24x12')
 colorscan = ColorSensor(INPUT_1)
 
 #testing how color sensor works
-"""
-while True:
-    scanner = colorscan.reflected_light_intensity
-    print("{0:.0f}".format(scanner))
-    console.text_at("", column=1, row=1, reset_console=True, alignment="L")
-    time.sleep(1)
-"""
 
-if (colorscan.reflected_light_intensity <=15):
-    for i in range(2):
-        if (i == 0):
-            bar1 = colorscan.reflected_light_intensity
-        if (i == 1):
-            bar2 = colorscan.reflected_light_intensity
-        if (i == 2):
-            bar3 = colorscan.reflected_light_intensity
+bar1 = 0
+bar2 = 0
+bar3 = 0
+i = 0
+done = 0
+while (done == 0):
+        scanner = colorscan.reflected_light_intensity
+        print("{0:.0f}".format(scanner))
+        console.text_at("", column=1, row=1, reset_console=True, alignment="L")
+        time.sleep(.1)
+        
+        if (scanner > 3 and scanner < 12):
+            spkr.play_note("D4", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
+            time.sleep(2)
+            while (i < 3):
+                moveDistance(.9, 20)
+                scanner = colorscan.reflected_light_intensity
+                if (i==0):
+                    bar1 = colorscan.reflected_light_intensity
+                    spkr.play_note("G3", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
+                if (i == 1):
+                    bar2 = colorscan.reflected_light_intensity
+                    spkr.play_note("G3", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
+                if (i == 2):
+                    bar3 = colorscan.reflected_light_intensity
+                    spkr.play_note("G3", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
+                    done = 1
+                i = i + 1
+                time.sleep(1)
+
 
 if (bar1 >= 20):
     if (bar2 >= 20):
