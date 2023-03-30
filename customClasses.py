@@ -4,6 +4,10 @@ from ev3dev2.motor import *
 from ev3dev2.sensor import *
 from ev3dev2.sensor.lego import *
 import math
+import os
+
+os.system('setfont Lat15-TerminusBold32x16')
+
 
 """
 This class adds a custom wheel size that matches the size of the wheel on our APR.
@@ -54,6 +58,14 @@ class APR_Location():
     m_distance_from_center_to_tire = 36.115625
 
     """
+    calibrateGyro calibrates the Gyro sensor and sets its rotation to 0
+    Use only once in program
+    """
+    def calibrateGyro(self):
+        self.m_GYRO.calibrate()
+        self.m_GYRO.reset()
+
+    """
     CalculateDistance
 
     This calculates the distance between two points
@@ -65,7 +77,7 @@ class APR_Location():
 
     Output: The distance between the two points
     """
-    def CalculateDistance(x1,y1,x2,y2):
+    def CalculateDistance(self, x1,y1,x2,y2):
         return(math.sqrt((x2-x1)**2+(y2-y1)**2))
     
     """
@@ -80,15 +92,60 @@ class APR_Location():
 
     Output: The heading the APR needs to have to face the target point
     """
-    def CalculateAngle(x1,y1,x2,y2):
-        math.atan((y2-y1)/(x2-x1))
+    def CalculateAngle(self,x1,y1,x2,y2):
+        yDifference = y2-y1
+        xDifference = x2-x1
+        if xDifference == 0:
+            if y2>y1:
+                return 0
+            return 180
+        if yDifference == 0:
+            if x2>x1:
+                return 90
+            return -90
+        return math.atan(yDifference/xDifference)
     
     """
-    DriveDistance returns the motor rotation value based on the distance given
+    CalculateMotorPosition returns the motor rotation value based on the distance given
     Recieves input for distance (in cm) and wheel (used to access its ticks per inches)
     """
-    def DriveDistance(self, distance):
+    def CalculateMotorPosition(self, distance):
         return distance * self.m_driveTire.Ticks_per_CM
+
+    """
+    TurnToAngle turns to the inputted angle
+    The initial turn is at 10 speed to the right
+    The secondary turn is at 5 speed to the left
+    The angle of the gyro sensor is printed to the screen
+    """
+    def TurnToAngle(self,angle):
+        time.sleep(.1)  #Prepare to turn
+        INITIAL_TURN_SPEED = 10
+        CORRECTION_TURN_SPEED = 5
+
+        #Turn left while the angle is less than the inputted angle
+        while self.m_GYRO.angle<angle:
+            self.m_motorL.on(INITIAL_TURN_SPEED)
+            self.m_motorR.on(-INITIAL_TURN_SPEED)
+
+        #Stop the motors to get more accurate results
+        self.m_motorL.stop()
+        self.m_motorR.stop()
+        time.sleep(0.25)
+
+        #Turn right while the angle is greater than the inputted angle
+        while self.m_GYRO.angle>angle:
+            self.m_motorL.on(-CORRECTION_TURN_SPEED)
+            self.m_motorR.on(CORRECTION_TURN_SPEED)
+
+        #Stop the motors to get more accurate results
+        self.m_motorL.stop()
+        self.m_motorR.stop()
+        time.sleep(.1)
+        """
+        #Display the gyro's angle to the screen
+        print("{0:.2f} degrees".format(self.m_GYRO.angle))
+        """
     
     """
     moveDistance moves the APR a given distance at a specified speed.
@@ -176,6 +233,7 @@ class APR_Location():
 
         # Turn towards the point
         angle = self.CalculateAngle(self.m_x_pos, self.m_y_pos, x, y)
+        print("{0:.2f} degrees".format(angle))
         self.TurnToAngle(angle)
 
         # Drive to the point
