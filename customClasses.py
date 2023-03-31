@@ -39,6 +39,15 @@ class CustomMotorD(Motor):
     def __init__(self):
         Motor.__init__(self,OUTPUT_D)
 
+""""
+LiftMotor
+
+Create a custom motor for the lift
+"""
+class LiftMotor(Motor):
+    def __init__(self):
+        Motor.__init__(self,OUTPUT_B)
+
 
 """
 APR_Location 
