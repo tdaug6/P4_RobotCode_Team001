@@ -96,3 +96,5 @@ Recieves input for distance (in cm) and wheel (used to access its ticks per inch
 """
 def DriveDistance(distance, wheel):
     return distance * wheel.Ticks_per_CM
+
+turnToAngle(90)

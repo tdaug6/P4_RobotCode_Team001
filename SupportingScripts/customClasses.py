@@ -7,6 +7,20 @@ import math
 import os
 
 os.system('setfont Lat15-TerminusBold32x16')
+def LowerLift(mine):
+    MIN_HEIGHT = 0  #Experimental value...NOT FINAL
+    SPEED = 30
+
+        # Set the motor position holder to the true motor position
+    m_lift_position = mine.position
+
+        # Loop until the motor's position reaches the desired height
+    while m_lift_position > MIN_HEIGHT:
+        mine.on(-SPEED) # Run the motor at the speed
+        m_lift_position = mine.position   # Update the motor position holder to the true motor position
+
+        # Stop the motor so it doesn't continue to run
+    mine.stop()
 
 
 """
@@ -47,3 +61,7 @@ Create a custom motor for the lift
 class LiftMotor(Motor):
     def __init__(self):
         Motor.__init__(self,OUTPUT_B)
+
+
+mine = CustomMotorA()
+LowerLift(mine)
