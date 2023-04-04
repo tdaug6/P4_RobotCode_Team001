@@ -1,3 +1,10 @@
+
+"""
+Containers
+
+This class contains the location for every contianer
+and the location to drive to for each container
+"""
 class Containers():
     A1 = [[9,13],[15,13],[21,13],[27,13],[33,13],[39,13]
           [9,35],[15,35],[21,35],[27,35],[33,35],[39,35]]
@@ -18,3 +25,5 @@ class Containers():
           [69,83],[75,83],[81,83],[87,83],[93,83],[99,83]]
     D2 = [[69,85],[75,85],[81,85],[87,85],[93,85],[99,85]
           [69,107],[75,107],[81,107],[87,107],[93,107],[99,107]]
+    
+    DISTANCE_FROM_CONTAINER = 10
