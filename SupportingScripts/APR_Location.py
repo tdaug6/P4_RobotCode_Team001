@@ -4,6 +4,7 @@ from ev3dev2.motor import *
 from ev3dev2.sensor import *
 from ev3dev2.sensor.lego import *
 from customClasses import *
+from globals import *
 import math
 import os
 os.system('setfont Lat15-TerminusBold32x16')
