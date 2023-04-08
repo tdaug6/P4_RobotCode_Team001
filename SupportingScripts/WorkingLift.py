@@ -51,8 +51,8 @@ class Lift():
     OUTPUTS: The lift at the maximum height
     """
     def RaiseLift(self):
-        MAX_HEIGHT = 100   #Experimental value...NOT FINAL
-        SPEED = 30  # Percentage out of 100
+        MAX_HEIGHT = 80   #Experimental value...NOT FINAL
+        SPEED = 80  # Percentage out of 100
 
         # Set the motor position holder to the true motor position
         self.m_lift_position = self.m_lift_motor.position
