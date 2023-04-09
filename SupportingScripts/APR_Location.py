@@ -116,7 +116,75 @@ class APR_Location():
         #Display the gyro's angle to the screen
         print("{0:.2f} degrees".format(self.m_GYRO.angle))
         """
+
     
+    """
+    HallTurn
+
+    This is used to turn in the halls
+
+    Inputs: a boolean of the direction to turn
+                True = turning towards the box
+                False = turning away from the box
+            an array containing two elements, (x and y position of box center)
+    Outputs: A turn towards or away from the box
+    """
+    def HallTurn(self, direction, container):
+        INITIAL_TURN_SPEED = 10
+        CORRECTION_TURN_SPEED = 5
+        y_cont_pos = container[1]
+        turnMotor = self.m_motorR
+
+        # Create a modifier for the direction based on whether the APR is turning into the container or away from it
+        #   +directionModifier = turn in, -directionModifier = turn out
+        if direction:
+            directionModifier = 1
+        else:
+            directionModifier = -1
+
+        # Determine the direction to turn based on the container's y-value
+        #   -dir is turn right, +dir is turn left
+        if y_cont_pos == 13:
+            dir = -1
+        elif y_cont_pos == 35:
+            dir = 1
+        elif y_cont_pos == 37:
+            dir = -1
+        elif y_cont_pos == 59:
+            dir = 1
+        elif y_cont_pos == 61:
+            dir = -1
+        elif y_cont_pos == 83:
+            dir = 1
+        elif y_cont_pos == 85:
+            dir = -1
+        elif y_cont_pos == 107:
+            dir = 1
+
+        # Change the direction of the turn based on its  "direction" parameter
+        dir *= directionModifier
+
+        # Determine what angle to turn to
+        TURN_ANGLE = self.m_GYRO.angle + dir*90
+
+        #Turn to towards or away from the box
+        if dir > 0:     # If turning left,
+            while self.m_GYRO.angle<TURN_ANGLE:     # Loop while the angle is less than calculated angle
+                # Set the motor to run at the speed multiplied by the modifier
+                # If the modifier is -, then the robot will turn away from the container
+                # If the modifier is +, then the robot will turn towards the container
+                turnMotor.on(INITIAL_TURN_SPEED*directionModifier)
+        else:       # Otherwise, the robot is turning right
+            while self.m_GYRO.angle>TURN_ANGLE:     # Loop while the angle is less than calculated angle
+                # Set the motor to run at the speed multiplied by the modifier
+                # If the modifier is -, then the robot will turn away from the container
+                # If the modifier is +, then the robot will turn towards the container
+                turnMotor.on(INITIAL_TURN_SPEED*directionModifier)
+        
+        # Stop running the motor
+        turnMotor.stop()
+
+
     """
     moveDistance moves the APR a given distance at a specified speed.
     Distance is measured in cm and speed is a percentage out of 100.
