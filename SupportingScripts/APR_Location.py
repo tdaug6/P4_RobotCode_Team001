@@ -276,7 +276,7 @@ class APR_Location():
     
     Outputs: The APR drives to the point
     """
-    def DriveToPoint(self, x,y):
+    def DriveToPoint(self, x, y, reverse = False):
         SPEED = 50
 
         # Turn towards the point
@@ -287,4 +287,46 @@ class APR_Location():
         # Drive to the point
         distance = self.CalculateDistance(self.m_x_pos, self.m_y_pos, x, y)
         self.moveDistance(distance, SPEED)
+
+    """
+    DriveToContainer
+
+    Drives the robot to the inputted container
+
+    Inputs: A container of the x and y positions of the location
+    Outputs: The APR moves from the fulfillment center to the container
+    """
+    def DriveToContainer(self, Container):
+        SPEED = 50
+        target_x_pos = Container[0]
+        target_y_pos = Container[1]
+
+        # Drive to the container
+        #   Drive to the hall
+        self.DriveToPoint(self.m_x_pos, target_y_pos)
+        #   Drive to the Container
+        self.DriveToPoint(target_x_pos, target_y_pos)
+
+    """
+    DriveToCenter
+
+    Drives the robot to the inputted center
+
+    Inputs: A center of the x and y positions of the location
+    Outputs: The APR moves from the container location to the fulfillment center
+    """
+    # IN PROGRESS
+    def DriveToCenter(self, Center):
+        SPEED = 50
+        initial_x_pos = self.m_x_pos
+        target_x_pos = Center[0]
+        target_y_pos = Center[1]
+
+        # Drive to the container
+        #   Drive to the end of the hall
+        self.DriveToPoint(target_x_pos, self.m_y_pos)
+
+        #   Drive to the Container
+        self.DriveToPoint(target_x_pos, target_y_pos)
+
 
