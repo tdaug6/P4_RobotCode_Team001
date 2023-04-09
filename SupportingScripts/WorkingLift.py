@@ -57,7 +57,7 @@ class Lift():
         # Set the motor position holder to the true motor position
         self.m_lift_position = self.m_lift_motor.position
 
-        self.m_lift_motor.on(30)
+        self.m_lift_motor.on(60)
         """
         # Loop until the motor's position reaches the desired height
         while self.m_lift_position < MAX_HEIGHT:
@@ -81,7 +81,7 @@ class Lift():
         SPEED = 30
 
         self.m_lift_motor.on(-30)
-        time.sleep(0.2)
+        time.sleep(0.4)
         self.m_lift_motor.stop()
         """
         # Set the motor position holder to the true motor position
