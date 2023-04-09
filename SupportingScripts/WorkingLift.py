@@ -52,7 +52,7 @@ class Lift():
     """
     def RaiseLift(self):
         MAX_HEIGHT = 80   #Experimental value...NOT FINAL
-        SPEED = 80  # Percentage out of 100
+        SPEED = 100  # Percentage out of 100
 
         # Set the motor position holder to the true motor position
         self.m_lift_position = self.m_lift_motor.position
