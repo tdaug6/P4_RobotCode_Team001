@@ -27,6 +27,16 @@ class APR_Location():
     m_driveTire = EV3CustomWheel
     m_distance_from_center_to_tire = 36.115625
 
+    #
+    # Constructor for APR_Location
+    #
+    # Constructs an APR_Location for the important setup information
+    #       If no inputs are given, assume the APR is at (0,0) with heading 0 degrees
+    def APR_Location(x_pos = 0, y_pos = 0, heading = 0):
+        m_x_pos = x_pos
+        m_y_pos = y_pos
+        m_heading = heading
+
     """
     calibrateGyro calibrates the Gyro sensor and sets its rotation to 0
     Use only once in program
