@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from APR_Location import *
 from globals import *
+import time
 
 #
 # Subtask1_FD
@@ -13,12 +14,25 @@ from globals import *
 # Outputs:  The APR drives to the specific location
 def Subtask1_FD(APR,containerLocation, Container):
     # Determine target values
-    target_y_pos = Container.DISTANCE_BETWEEN_CENTERS + containerLocation[1]
-    target_x_pos = containerLocation[0]
+    container_y_pos = Container.DISTANCE_BETWEEN_CENTERS + containerLocation[1]
+    container_x_pos = containerLocation[0]
+    fulfillmentB_x_pos = 60     #INCORRECT VALUES
+    fulfillmentB_y_pos = 0      #INCORRECT VALUES
 
     # Drive to the container
-    APR.DriveToPoint(APR.m_x_pos, target_y_pos)     # First, move up to the correct row
-    APR.DriveToPoint(target_x_pos, target_y_pos)    # Then, move down the row to the correct container
+    APR.DriveToPoint(APR.m_x_pos, container_y_pos)     # First, move up to the correct row
+    APR.DriveToPoint(container_x_pos, container_y_pos)    # Then, move down the row to the correct container
+
+    # Wait 5 seconds
+    time.sleep(5)
+
+    # Drive to the container
+    APR.DriveToPoint(fulfillmentB_x_pos, container_y_pos)     # drive to the end of the row
+    APR.DriveToPoint(fulfillmentB_x_pos, fulfillmentB_y_pos)     # drive to the end of the row
+
+    # Turn to face course
+    APR.TurnToAngle(0)
+
 
     
 # Important variables for function call
