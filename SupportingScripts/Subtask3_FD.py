@@ -26,8 +26,10 @@ expected = "B"
 #move to such that the barcode is very close to the furthest edge of the box.
 #Too far is better than too short
 
-#myRobot = APR_Location()
-#myRobot.calibrateGyro()
+myRobot = APR_Location()
+myRobot.calibrateGyro()
+
+myRobot.moveDistance(30.48, 50)
 
 #activate scanner - might have to back up slightly
 actual = Scanner()
