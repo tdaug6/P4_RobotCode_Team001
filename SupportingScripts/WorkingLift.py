@@ -97,7 +97,7 @@ class Lift():
         """
 """
 Example Command
-"""
+
 i=0
 liftarm = Lift()
 while True: 
@@ -109,6 +109,6 @@ while True:
         break
 
 liftarm.LowerLift()
-
+"""
 
 

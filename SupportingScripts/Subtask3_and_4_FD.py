@@ -17,7 +17,7 @@ console.set_font(font='Lat15-TerminusBold24x12')
 
 #--------------INPUT EXPECTED BAR CODE---------------#
 
-expected = ""
+expected = "B"
 
 #----------------------------------------------------#
 
@@ -30,7 +30,9 @@ expected = ""
 myRobot = APR_Location()
 myRobot.calibrateGyro()
 
+spkr.play_note("A2", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
 myRobot.moveDistance(38.1, 50)
+
 
 #activate scanner - might have to back up slightly
 actual = Scanner()
@@ -45,7 +47,7 @@ if (actual == expected):
 else:
     spkr.play_note("E4", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
     console.text_at("%0s"%("Does Not Match!"), column=1, row=1, reset_console=False, alignment="L")
-
+"""
 #Move Back and Turn in for container
 myRobot.moveDistance(-5, 20)
 myRobot.HallTurn(True)
@@ -73,3 +75,4 @@ if (actual == expected):
 else:
     while True:
         console.text_at("%0s"%("Does Not Match!"), column=1, row=1, reset_console=False, alignment="L")
+"""
