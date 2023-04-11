@@ -154,21 +154,21 @@ class APR_Location():
 
         # Determine the direction to turn based on the container's y-value
         #   -dir is turn right, +dir is turn left
-        if y_cont_pos == 13:
+        if y_cont_pos == 13*2.54:
             dir = -1
-        elif y_cont_pos == 35:
+        elif y_cont_pos == 35*2.54:
             dir = 1
-        elif y_cont_pos == 37:
+        elif y_cont_pos == 37*2.54:
             dir = -1
-        elif y_cont_pos == 59:
+        elif y_cont_pos == 59*2.54:
             dir = 1
-        elif y_cont_pos == 61:
+        elif y_cont_pos == 61*2.54:
             dir = -1
-        elif y_cont_pos == 83:
+        elif y_cont_pos == 83*2.54:
             dir = 1
-        elif y_cont_pos == 85:
+        elif y_cont_pos == 85*2.54:
             dir = -1
-        elif y_cont_pos == 107:
+        elif y_cont_pos == 107*2.54:
             dir = 1
 
         # Change the direction of the turn based on its  "direction" parameter
@@ -202,7 +202,7 @@ class APR_Location():
     This function is designed to correct the APR's x orientation based on the gyro sensor's angle.
     The motor rotation count of the left motor is printed to the screen for debugging purposes.
     """
-    def moveDistance(self, DISTANCE,SPEED):
+    def moveDistance(self, DISTANCE,SPEED = 50):
         DISTANCE_ROTATION = self.CalculateMotorPosition(DISTANCE)    #This is the number of ticks to the motor must rotate to reach the distance
 
         # Prepare updater variables to enter loop
