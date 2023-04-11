@@ -6,6 +6,7 @@ import time
 from os import *
 from BarcodeScanner import *
 from APR_Location import *
+from WorkingLift import *
 
 spkr = Sound()
 spkr.play_note("D4", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
@@ -16,7 +17,7 @@ console.set_font(font='Lat15-TerminusBold24x12')
 
 #--------------INPUT EXPECTED BAR CODE---------------#
 
-expected = "B"
+expected = ""
 
 #----------------------------------------------------#
 
@@ -29,7 +30,7 @@ expected = "B"
 myRobot = APR_Location()
 myRobot.calibrateGyro()
 
-myRobot.moveDistance(30.48, 50)
+myRobot.moveDistance(38.1, 50)
 
 #activate scanner - might have to back up slightly
 actual = Scanner()
@@ -40,9 +41,35 @@ spkr.play_note("B4", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
 #compare scanner results to input and output
 if (actual == expected):
     spkr.play_note("F4", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
+    console.text_at("%0s"%("Match!"), column=1, row=1, reset_console=False, alignment="L")
+else:
+    spkr.play_note("E4", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
+    console.text_at("%0s"%("Does Not Match!"), column=1, row=1, reset_console=False, alignment="L")
+
+#Move Back and Turn in for container
+myRobot.moveDistance(-5, 20)
+myRobot.HallTurn(True)
+
+#Register lift & lift container
+myLift = Lift()
+myLift.RaiseLift()
+
+#Turn out
+myRobot.HallTurn(False)
+
+#Move out
+myRobot.moveDistance(53.34, 50)
+
+#Lower Container
+myLift.LowerLift()
+
+#back out
+myRobot.moveDistance(-7.5, 50)
+
+#Keep displays running
+if (actual == expected):
     while True:
         console.text_at("%0s"%("Match!"), column=1, row=1, reset_console=False, alignment="L")
 else:
-    spkr.play_note("E4", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
     while True:
         console.text_at("%0s"%("Does Not Match!"), column=1, row=1, reset_console=False, alignment="L")
