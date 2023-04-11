@@ -62,6 +62,3 @@ class LiftMotor(Motor):
     def __init__(self):
         Motor.__init__(self,OUTPUT_B)
 
-
-mine = CustomMotorA()
-LowerLift(mine)

@@ -98,25 +98,41 @@ class APR_Location():
     The secondary turn is at 5 speed to the left
     The angle of the gyro sensor is printed to the screen
     """
-    def TurnToAngle(self,angle):
+    def TurnToAngle(self,angle,direction):
         time.sleep(.1)  #Prepare to turn
         INITIAL_TURN_SPEED = 10
         CORRECTION_TURN_SPEED = 5
 
-        #Turn left while the angle is less than the inputted angle
-        while self.m_GYRO.angle<angle:
-            self.m_motorL.on(INITIAL_TURN_SPEED)
-            self.m_motorR.on(-INITIAL_TURN_SPEED)
+        if direction:
+            #Turn left while the angle is less than the inputted angle
+            while self.m_GYRO.angle<angle:
+                self.m_motorL.on(INITIAL_TURN_SPEED)
+                self.m_motorR.on(-INITIAL_TURN_SPEED)
 
-        #Stop the motors to get more accurate results
-        self.m_motorL.stop()
-        self.m_motorR.stop()
-        time.sleep(0.25)
+            #Stop the motors to get more accurate results
+            self.m_motorL.stop()
+            self.m_motorR.stop()
+            time.sleep(0.25)
 
-        #Turn right while the angle is greater than the inputted angle
-        while self.m_GYRO.angle>angle:
-            self.m_motorL.on(-CORRECTION_TURN_SPEED)
-            self.m_motorR.on(CORRECTION_TURN_SPEED)
+            #Turn right while the angle is greater than the inputted angle
+            while self.m_GYRO.angle>angle:
+                self.m_motorL.on(-CORRECTION_TURN_SPEED)
+                self.m_motorR.on(CORRECTION_TURN_SPEED)
+        else:
+            #Turn left while the angle is less than the inputted angle
+            while self.m_GYRO.angle>angle:
+                self.m_motorL.on(-INITIAL_TURN_SPEED)
+                self.m_motorR.on(INITIAL_TURN_SPEED)
+
+            #Stop the motors to get more accurate results
+            self.m_motorL.stop()
+            self.m_motorR.stop()
+            time.sleep(0.25)
+
+            #Turn right while the angle is greater than the inputted angle
+            while self.m_GYRO.angle<angle:
+                self.m_motorL.on(CORRECTION_TURN_SPEED)
+                self.m_motorR.on(-CORRECTION_TURN_SPEED)
 
         #Stop the motors to get more accurate results
         self.m_motorL.stop()

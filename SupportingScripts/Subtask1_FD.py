@@ -16,12 +16,12 @@ def Subtask1_FD(APR,containerLocation, targetLocation):
     # Determine target values
     container_y_pos = containerLocation[1]
     container_x_pos = containerLocation[0]
-    fulfillmentB_x_pos = 100 * 2.54     #INCORRECT VALUES
-    fulfillmentB_y_pos = 0      #INCORRECT VALUES
+    fulfillmentB_x_pos = 97 * 2.54     #INCORRECT VALUES
+    fulfillmentB_y_pos = 12*2.54      #INCORRECT VALUES
 
     # Drive to the container
-    APR.moveDistance(container_y_pos)     # First, move up to the correct row
-    APR.TurnToAngle(90)
+    APR.moveDistance(container_y_pos-15)     # First, move up to the correct row
+    APR.TurnToAngle(90,True)
     APR.moveDistance(container_x_pos)
     #APR.DriveToPoint(container_x_pos, container_y_pos)    # Then, move down the row to the correct container
 
@@ -30,14 +30,12 @@ def Subtask1_FD(APR,containerLocation, targetLocation):
 
     # Drive to the container
     APR.moveDistance(fulfillmentB_x_pos-container_x_pos)
-    APR.TurnToAngle(180)
-    APR.moveDistance(container_y_pos - fulfillmentB_y_pos)
+    APR.TurnToAngle(180,True)
+    APR.moveDistance(container_y_pos - fulfillmentB_y_pos+10)
     # APR.DriveToPoint(fulfillmentB_x_pos, container_y_pos)     # drive to the end of the row
     # APR.DriveToPoint(fulfillmentB_x_pos, fulfillmentB_y_pos)     # drive to the end of the row
 
-    # Turn to face course
-    # APR.TurnToAngle(0)
-
+    APR.TurnToAngle(0,False)
 
     
 # Important variables for function call
@@ -55,7 +53,7 @@ CONTAINER_NUMBER = 7    #Enter the container number, the program will automatica
 # Set the inputted number as a container in A1
 TargetContainer = AllContainers.A1[CONTAINER_NUMBER-1]
 TrueTarget = TargetContainer
-TargetContainer[1] -=10
+TargetContainer[1] += 10
 TargetContainer[0] += 10
 
 # Function call
