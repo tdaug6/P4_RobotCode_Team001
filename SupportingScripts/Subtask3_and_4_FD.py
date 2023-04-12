@@ -4,9 +4,14 @@ from ev3dev2.sound import Sound
 from ev3dev2.display import *
 import time
 from os import *
+from ev3dev2.motor import *
 from BarcodeScanner import *
 from APR_Location import *
 from WorkingLift import *
+from customClasses import *
+
+MotorL = CustomMotorA
+MotorR = CustomMotorD
 
 spkr = Sound()
 spkr.play_note("D4", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
@@ -30,8 +35,10 @@ expected = "B"
 myRobot = APR_Location()
 myRobot.calibrateGyro()
 
+container = Containers()
+specificContainer = container.A1[0]
+
 spkr.play_note("A2", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
-myRobot.moveDistance(38.1, 50)
 
 
 #activate scanner - might have to back up slightly
@@ -47,26 +54,42 @@ if (actual == expected):
 else:
     spkr.play_note("E4", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
     console.text_at("%0s"%("Does Not Match!"), column=1, row=1, reset_console=False, alignment="L")
-"""
+
 #Move Back and Turn in for container
-myRobot.moveDistance(-5, 20)
-myRobot.HallTurn(True)
+myRobot.m_motorL.on(-20)
+myRobot.m_motorR.on(-20)
+time.sleep(1.3)
+myRobot.m_motorL.stop()
+myRobot.m_motorR.stop()
+myRobot.HallTurn(True, specificContainer)
+myRobot.m_motorL.on(10)
+myRobot.m_motorR.on(10)
+time.sleep(.1)
+myRobot.m_motorL.stop()
+myRobot.m_motorR.stop()
+
 
 #Register lift & lift container
 myLift = Lift()
 myLift.RaiseLift()
 
 #Turn out
-myRobot.HallTurn(False)
+time.sleep(.1)
+myRobot.HallTurn(False, specificContainer)
 
 #Move out
-myRobot.moveDistance(53.34, 50)
+myRobot.moveDistance(24*2.54, 50)
+time.sleep(.5)
 
 #Lower Container
 myLift.LowerLift()
 
 #back out
-myRobot.moveDistance(-7.5, 50)
+myRobot.m_motorL.on(-30)
+myRobot.m_motorR.on(-30)
+time.sleep(.5)
+myRobot.m_motorL.stop()
+myRobot.m_motorR.stop()
 
 #Keep displays running
 if (actual == expected):
@@ -75,4 +98,3 @@ if (actual == expected):
 else:
     while True:
         console.text_at("%0s"%("Does Not Match!"), column=1, row=1, reset_console=False, alignment="L")
-"""
