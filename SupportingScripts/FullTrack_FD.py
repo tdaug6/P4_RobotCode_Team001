@@ -292,5 +292,6 @@ FULFILLMENT_CENTER = 'A'    # must be capitalized
 
 AllContainers = Containers()
 MyRobot = APR_Location()
+MyRobot.calibrateGyro()
 
 FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENTER, AllContainers, MyRobot)
