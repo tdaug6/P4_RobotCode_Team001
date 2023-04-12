@@ -211,13 +211,11 @@ class APR_Location():
         # Stop running the motor
         turnMotor.stop()
     
-    def MoveReverse(self,DISTANCE,SPEED = 50):
-        DISTANCE_ROTATION = self.CalculateMotorPosition(DISTANCE)
-
+    def MoveReverse(self,WAIT_TIME,SPEED = 50):
         self.m_motorL.on(-SPEED)
         self.m_motorR.on(-SPEED)
 
-        time.sleep(0.1)
+        time.sleep(WAIT_TIME)
 
         self.m_motorL.stop()
         self.m_motorR.stop()

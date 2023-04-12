@@ -13,7 +13,7 @@ from os import *
 
 #signify start
 spkr = Sound()
-spkr.play_note("D4", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
+#spkr.play_note("D4", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
 
 """"
 LiftMotor
@@ -97,7 +97,6 @@ class Lift():
         """
 """
 Example Command
-
 i=0
 liftarm = Lift()
 while True: 
@@ -109,6 +108,7 @@ while True:
         break
 
 liftarm.LowerLift()
+
 """
 
 

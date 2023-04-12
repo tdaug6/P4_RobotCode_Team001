@@ -4,11 +4,12 @@ from globals import *
 from BarcodeScanner import *
 from WorkingLift import *
 import time
+from ev3dev2.console import *
 
 def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENTER, ALL_CONTAINERS, APR):
-    
 
-    myRobot = APR_Location()
+    console = Console()
+    console.set_font(font='Lat15-TerminusBold24x12')
 
     # Determine the target container based on the inputs for container number and shelving area
     if SHELVING_AREA == "A1":
@@ -33,32 +34,33 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
     Target_Container_y = Target_Container[1]
 
     # Update the y position based on what side of the hall the container is on
-    if CONTAINER_NUMBER >= 7:
-        Target_Container_y += AllContainers.DISTANCE_BETWEEN_CENTERS
+    if CONTAINER_NUMBER <= 7:
+        """Target_Container_y -= AllContainers.DISTANCE_BETWEEN_CENTERS"""
         # Drive to container
         #   Drive to hall container is located in
-        APR.moveDistance(Target_Container_y)
+        APR.moveDistance(Target_Container_y-0.5*2.54)
         #   Turn towards the hall
         APR.TurnToAngle(90,True)
         #   Drive to the container location
-        APR.moveDistance(Target_Container_x)
+        
+        APR.moveDistance(Target_Container_x-3*2.54)
 
         """READ BARCODE"""
 
-        Scanner()
+        myScan = Scanner()
 
         """HALL TURN IN"""
-        myRobot.m_motorL.on(-20)
-        myRobot.m_motorR.on(-20)
+        APR.m_motorL.on(-20)
+        APR.m_motorR.on(-20)
         time.sleep(1.3)
-        myRobot.m_motorL.stop()
-        myRobot.m_motorR.stop()
-        myRobot.HallTurn(True, Target_Container)
-        myRobot.m_motorL.on(10)
-        myRobot.m_motorR.on(10)
+        APR.m_motorL.stop()
+        APR.m_motorR.stop()
+        APR.HallTurn(True, Target_Container)
+        APR.m_motorL.on(10)
+        APR.m_motorR.on(10)
         time.sleep(.1)
-        myRobot.m_motorL.stop()
-        myRobot.m_motorR.stop()
+        APR.m_motorL.stop()
+        APR.m_motorR.stop()
 
         """RAISE LIFT"""
         myLift = Lift()
@@ -66,42 +68,41 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
         """HALL TURN OUT"""
         time.sleep(.1)
-        myRobot.HallTurn(False, Target_Container)
+        APR.HallTurn(False, Target_Container)
 
-        APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_B_X - Target_Container_x)
+        APR.moveDistance(FULFILLMENT_CENTER_B_X - Target_Container_x)
 
         if FULFILLMENT_CENTER == 'B':
             #Turn to face center B
             APR.TurnToAngle(180,True)
 
             # Drive into Center B
-            DistanceModifier = 5
-            APR.moveDistance(Target_Container_y-DistanceModifier)
+            DistanceModifier = 1*2.54
+            APR.moveDistance(Target_Container_y+DistanceModifier)
 
             """LOWER LIFT"""
             myLift.LowerLift()
-            myRobot.m_motorL.on(-30)
-            myRobot.m_motorR.on(-30)
+            APR.m_motorL.on(-30)
+            APR.m_motorR.on(-30)
             time.sleep(.5)
-            myRobot.m_motorL.stop()
-            myRobot.m_motorR.stop()
-
+            APR.m_motorL.stop()
+            APR.m_motorR.stop()
 
             # Slightly back away from the center
-            APR.MoveReverse(10)
+            APR.MoveReverse(0.75)
 
             # Turn to drive down the hall
             APR.TurnToAngle(270,True)
 
             # Drive to be in line with the home
-            DistanceModifier = 10
-            APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_B_X - DistanceModifier)
+            DistanceModifier = 15
+            APR.moveDistance(FULFILLMENT_CENTER_B_X - DistanceModifier)
 
             # Turn to drive into fulfillment center
             APR.TurnToAngle(180,False)
 
             # Drive into the fulfillment center
-            Transition_y = 12*2.54
+            Transition_y = 5*2.54
             APR.moveDistance(Transition_y)
 
             # Turn to face the facility
@@ -120,7 +121,7 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
             # Drive to be in line with the center C
             DistanceModifier = 10
-            APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_B_X - DistanceModifier)
+            APR.moveDistance(FULFILLMENT_CENTER_B_X - DistanceModifier)
 
             # Turn to face center C
             APR.TurnToAngle(0,True)
@@ -131,11 +132,11 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
             """LOWER LIFT"""
             myLift.LowerLift()
-            myRobot.m_motorL.on(-30)
-            myRobot.m_motorR.on(-30)
+            APR.m_motorL.on(-30)
+            APR.m_motorR.on(-30)
             time.sleep(.5)
-            myRobot.m_motorL.stop()
-            myRobot.m_motorR.stop()
+            APR.m_motorL.stop()
+            APR.m_motorR.stop()
 
 
             # Slightly back away from the center
@@ -146,7 +147,7 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
             # Drive into home A
             DistanceModifier = 10
-            APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_C_Y-DistanceModifier)
+            APR.moveDistance(FULFILLMENT_CENTER_C_Y-DistanceModifier)
 
             # Turn to face the facility
             APR.TurnToAngle(0,True)
@@ -161,11 +162,11 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
             """LOWER LIFT"""
             myLift.LowerLift()
-            myRobot.m_motorL.on(-30)
-            myRobot.m_motorR.on(-30)
+            APR.m_motorL.on(-30)
+            APR.m_motorR.on(-30)
             time.sleep(.5)
-            myRobot.m_motorL.stop()
-            myRobot.m_motorR.stop()
+            APR.m_motorL.stop()
+            APR.m_motorR.stop()
 
 
             # Slightly back away from the center
@@ -173,32 +174,32 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
             # Drive to be in line with the center C
             DistanceModifier = 10
-            APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_D_X - DistanceModifier)
+            APR.moveDistance(FULFILLMENT_CENTER_D_X - DistanceModifier)
             
             # Turn to face home A
             APR.TurnToAngle(-180,False)
 
             # Drive into home A
             DistanceModifier = 10
-            APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_C_Y-DistanceModifier)
+            APR.moveDistance(FULFILLMENT_CENTER_C_Y-DistanceModifier)
 
             # Turn to face the facility
             APR.TurnToAngle(0,True)
 
 
     else:
-        Target_Container_y -= AllContainers.DISTANCE_BETWEEN_CENTERS
+        Target_Container_y += AllContainers.DISTANCE_BETWEEN_CENTERS
 
         # Drive into hall connecting home A and center B
         DistanceModifier = 10
-        APR.moveDistance(ALL_CONTAINERS.A_B_HALL_Y-DistanceModifier)
+        APR.moveDistance(A_B_HALL_Y-DistanceModifier)
 
         # Turn to face towards center B
         APR.TurnToAngle(90,True)
 
         # Drive to the end of the hall, in line with centers B and D
         DistanceModifier = 10
-        APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_B_X-DistanceModifier)
+        APR.moveDistance(FULFILLMENT_CENTER_B_X-DistanceModifier)
 
         # Turn to face center D
         APR.TurnToAngle(0,False)
@@ -212,21 +213,20 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
         """READ BARCODE"""
 
-        Scanner()
+        #myScan = Scanner()
 
         """HALL TURN IN"""
-        myRobot = APR_Location()
-        myRobot.m_motorL.on(-20)
-        myRobot.m_motorR.on(-20)
+        APR.m_motorL.on(-20)
+        APR.m_motorR.on(-20)
         time.sleep(1.3)
-        myRobot.m_motorL.stop()
-        myRobot.m_motorR.stop()
-        myRobot.HallTurn(True, Target_Container)
-        myRobot.m_motorL.on(10)
-        myRobot.m_motorR.on(10)
+        APR.m_motorL.stop()
+        APR.m_motorR.stop()
+        APR.HallTurn(True, Target_Container)
+        APR.m_motorL.on(10)
+        APR.m_motorR.on(10)
         time.sleep(.1)
-        myRobot.m_motorL.stop()
-        myRobot.m_motorR.stop()
+        APR.m_motorL.stop()
+        APR.m_motorR.stop()
 
         """RAISE LIFT"""
         myLift = Lift()
@@ -234,23 +234,23 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
         """HALL TURN OUT"""
         time.sleep(.1)
-        myRobot.HallTurn(False, Target_Container)
+        APR.HallTurn(False, Target_Container)
 
-        APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_B_X - Target_Container_x)
+        APR.moveDistance(FULFILLMENT_CENTER_B_X - Target_Container_x)
 
         if FULFILLMENT_CENTER == 'B':
             # Turn to face home A
             APR.TurnToAngle(-180,False)
 
             # Drive to the end of the hall
-            APR.moveDistance(Target_Container_y - ALL_CONTAINERS.A_B_HALL_Y)
+            APR.moveDistance(Target_Container_y - A_B_HALL_Y)
 
             # Turn to face towards center B
             APR.TurnToAngle(-270,False)
 
             # Drive to the end of the hall
             DistanceModifier = 10
-            APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_B_X-DistanceModifier)
+            APR.moveDistance(FULFILLMENT_CENTER_B_X-DistanceModifier)
 
             # Turn towards center B
             APR.TurnToAngle(-180,True)
@@ -261,11 +261,11 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
             """LOWER LIFT"""
             myLift.LowerLift()
-            myRobot.m_motorL.on(-30)
-            myRobot.m_motorR.on(-30)
+            APR.m_motorL.on(-30)
+            APR.m_motorR.on(-30)
             time.sleep(.5)
-            myRobot.m_motorL.stop()
-            myRobot.m_motorR.stop()
+            APR.m_motorL.stop()
+            APR.m_motorR.stop()
 
 
             # Slightly back away from the center
@@ -276,14 +276,14 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
             # Drive to the end of the hall
             DistanceModifier = 10
-            APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_B_X-DistanceModifier)
+            APR.moveDistance(FULFILLMENT_CENTER_B_X-DistanceModifier)
 
             # Turn to home A
             APR.TurnToAngle(-180,False)
 
             # Drive into home
             DistanceModifier = 10
-            APR.moveDistance(ALL_CONTAINERS.A_B_HALL_Y-DistanceModifier)
+            APR.moveDistance(A_B_HALL_Y-DistanceModifier)
 
             # Turn to face facility
             APR.TurnToAngle(0,True)
@@ -294,15 +294,15 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
             # Drive into center C
             DistanceModifier = 0
-            APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_C_Y - Target_Container_y - DistanceModifier)
+            APR.moveDistance(FULFILLMENT_CENTER_C_Y - Target_Container_y - DistanceModifier)
 
             """LOWER LIFT"""
             myLift.LowerLift()
-            myRobot.m_motorL.on(-30)
-            myRobot.m_motorR.on(-30)
+            APR.m_motorL.on(-30)
+            APR.m_motorR.on(-30)
             time.sleep(.5)
-            myRobot.m_motorL.stop()
-            myRobot.m_motorR.stop()
+            APR.m_motorL.stop()
+            APR.m_motorR.stop()
 
             
             # Slightly back away from the center
@@ -313,7 +313,7 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
             # Drive into home A
             DistanceModifier = 10
-            APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_C_Y-DistanceModifier)
+            APR.moveDistance(FULFILLMENT_CENTER_C_Y-DistanceModifier)
 
             # Turn to face faciity
             APR.TurnToAngle(0,True)
@@ -325,14 +325,14 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
             # Drive to the end of the hall
             DistanceModifier = 10
-            APR.moveDistance(Target_Container_y - ALL_CONTAINERS.FULFILLMENT_CENTER_C_Y-DistanceModifier)
+            APR.moveDistance(Target_Container_y - FULFILLMENT_CENTER_C_Y-DistanceModifier)
 
             # Turn to face towards center B
             APR.TurnToAngle(90,True)
 
             # Drive to the end of the hall
             DistanceModifier = 10
-            APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_D_X-DistanceModifier)
+            APR.moveDistance(FULFILLMENT_CENTER_D_X-DistanceModifier)
 
             # Turn towards center B
             APR.TurnToAngle(0,False)
@@ -343,11 +343,11 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
             """LOWER LIFT"""
             myLift.LowerLift()
-            myRobot.m_motorL.on(-30)
-            myRobot.m_motorR.on(-30)
+            APR.m_motorL.on(-30)
+            APR.m_motorR.on(-30)
             time.sleep(.5)
-            myRobot.m_motorL.stop()
-            myRobot.m_motorR.stop()
+            APR.m_motorL.stop()
+            APR.m_motorR.stop()
 
 
             # Slightly back away from the center
@@ -358,23 +358,38 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
             # Drive to the end of the hall
             DistanceModifier = 10
-            APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_D_X-DistanceModifier)
+            APR.moveDistance(FULFILLMENT_CENTER_D_X-DistanceModifier)
 
             # Turn to home A
             APR.TurnToAngle(-180,False)
 
             # Drive into home
             DistanceModifier = 10
-            APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_D_Y-DistanceModifier)
+            APR.moveDistance(FULFILLMENT_CENTER_D_Y-DistanceModifier)
 
             # Turn to face facility
             APR.TurnToAngle(0,True)
+    
+    #Compare scannings
+    if (BARCODE_TYPE == myScan):
+        while True:
+            console.text_at("%0s"%("Match"), column=1, row=1, reset_console=False, alignment="L")
+            console.text_at("%0s"%(myScan), column=1, row=3, reset_console=False, alignment="L")
+    else:
+        while True:
+            console.text_at("%0s"%("Doesn't Match"), column=1, row=1, reset_console=False, alignment="L")
+            console.text_at("%0s"%(myScan), column=1, row=3, reset_console=False, alignment="L")
+        
 
+#------------------------------------------------------------#
+#                       FULL TRACK                           #
 
 SHELVING_AREA = "A1"    # must be capitalized
-CONTAINER_NUMBER = 2
+CONTAINER_NUMBER = 1
 BARCODE_TYPE = 1
-FULFILLMENT_CENTER = 'A'    # must be capitalized
+FULFILLMENT_CENTER = 'B'    # must be capitalized
+
+#------------------------------------------------------------#
 
 AllContainers = Containers()
 MyRobot = APR_Location()

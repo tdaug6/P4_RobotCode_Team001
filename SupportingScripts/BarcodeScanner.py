@@ -63,7 +63,7 @@ def Scanner():
         while (i < 3):
             scanner = colorscan.reflected_light_intensity
             time.sleep(.1)
-            myRobot.moveDistance(.45*2.54, 10)
+            myRobot.moveDistance(.5*2.54, 10)
             if (i==0):
                 bar1 = colorscan.reflected_light_intensity
                 spkr.play_note("G3", 0.25, 100, Sound.PLAY_NO_WAIT_FOR_COMPLETE)
@@ -81,16 +81,15 @@ def Scanner():
     if (bar1 >= 17):
         if (bar2 >= 17):
             if (bar3 >= 17):
-                code = "A"
+                code = 1
             else:
-                code = "D"
+                code = 4
         else:
-            code = "B"
+            code = 2
     else:
-        code = "C"
+        code = 3
             
-    #while True:
-        #console.text_at("%0s"%(code), column=1, row=1, reset_console=False, alignment="L")
+    # while True:
+    #     console.text_at("%0s"%(code), column=1, row=1, reset_console=False, alignment="L")
 
     return code
-

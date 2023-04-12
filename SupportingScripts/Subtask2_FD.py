@@ -12,7 +12,7 @@ import time
 # Outpus:   The APR moves to Fulfillment Center A from B
 def Subtask2_FD(APR,x_initial,y_initial):
     # Target location values
-    transition_y_pos = 10.5*2.54 #PLACEHOLDER VALUE, UPDATE TO CORRECT
+    transition_y_pos = 8.5*2.54 #PLACEHOLDER VALUE, UPDATE TO CORRECT
     FulfillmentA_x_pos = 0 #PLACEHOLDER VALUE, UPDATE TO CORRECT
     FulfillmentA_y_pos = 3*2.54 #PLACEHOLDER VALUE, UPDATE TO CORRECT
 
@@ -22,11 +22,11 @@ def Subtask2_FD(APR,x_initial,y_initial):
     # APR.DriveToPoint(APR.m_x_pos, transition_y_pos)
     #   Drive down the hall to line up with center A
     APR.TurnToAngle(-90,False)
-    APR.moveDistance(x_initial-FulfillmentA_x_pos)
+    APR.moveDistance(x_initial-FulfillmentA_x_pos-3*2.54)
     # APR.DriveToPoint(FulfillmentA_x_pos, APR.m_y_pos)
     #   Drive into centerA
     APR.TurnToAngle(-180,False)
-    APR.moveDistance(transition_y_pos+y_initial-FulfillmentA_y_pos)
+    APR.moveDistance(transition_y_pos+y_initial-FulfillmentA_y_pos-0.5*2.54)
     # APR.DriveToPoint(FulfillmentA_x_pos, FulfillmentA_y_pos)
 
     #Turn to face towards the course        MAY NOT BE NEEDED

@@ -15,9 +15,9 @@ import time
 def Subtask1_FD(APR,containerLocation, targetLocation):
     # Determine target values
     container_y_pos = containerLocation[1]
-    container_x_pos = containerLocation[0]
+    container_x_pos = containerLocation[0]-6*2.54
     fulfillmentB_x_pos = 97 * 2.54     #INCORRECT VALUES
-    fulfillmentB_y_pos = 12*2.54      #INCORRECT VALUES
+    fulfillmentB_y_pos = 15*2.54      #INCORRECT VALUES
 
     # Drive to the container
     APR.moveDistance(container_y_pos-15)     # First, move up to the correct row
@@ -29,9 +29,9 @@ def Subtask1_FD(APR,containerLocation, targetLocation):
     time.sleep(5)
 
     # Drive to the container
-    APR.moveDistance(fulfillmentB_x_pos-container_x_pos)
+    APR.moveDistance(fulfillmentB_x_pos-container_x_pos-2*2.54)
     APR.TurnToAngle(180,True)
-    APR.moveDistance(container_y_pos - fulfillmentB_y_pos+10)
+    APR.moveDistance(container_y_pos - fulfillmentB_y_pos+20+1*2.54)
     # APR.DriveToPoint(fulfillmentB_x_pos, container_y_pos)     # drive to the end of the row
     # APR.DriveToPoint(fulfillmentB_x_pos, fulfillmentB_y_pos)     # drive to the end of the row
 
@@ -46,7 +46,7 @@ AllContainers = Containers()    # Used for container location and measurements
 #------------------------------------------------------------#
 #                       SUBTASK 1                            #
 
-CONTAINER_NUMBER = 7    #Enter the container number, the program will automatically subtract one from the inputted value
+CONTAINER_NUMBER = 11    #Enter the container number, the program will automatically subtract one from the inputted value
 
 #------------------------------------------------------------#
 
