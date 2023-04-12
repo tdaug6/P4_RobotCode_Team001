@@ -97,6 +97,7 @@ class APR_Location():
     The initial turn is at 10 speed to the right
     The secondary turn is at 5 speed to the left
     The angle of the gyro sensor is printed to the screen
+    Direction of the turn, True = turn right, False = turn left
     """
     def TurnToAngle(self,angle,direction):
         time.sleep(.1)  #Prepare to turn
@@ -209,7 +210,17 @@ class APR_Location():
         
         # Stop running the motor
         turnMotor.stop()
+    
+    def MoveReverse(self,DISTANCE,SPEED = 50):
+        DISTANCE_ROTATION = self.CalculateMotorPosition(DISTANCE)
 
+        self.m_motorL.on(-SPEED)
+        self.m_motorR.on(-SPEED)
+
+        time.sleep(0.1)
+
+        self.m_motorL.stop()
+        self.m_motorR.stop()
 
     """
     moveDistance moves the APR a given distance at a specified speed.
