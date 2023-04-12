@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 from APR_Location import *
 from globals import *
+from BarcodeScanner import *
+from WorkingLift import *
 import time
 
 def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENTER, ALL_CONTAINERS, APR):
     
+
+    myRobot = APR_Location()
+
     # Determine the target container based on the inputs for container number and shelving area
     if SHELVING_AREA == "A1":
         Target_Container = AllContainers.A1[CONTAINER_NUMBER-1]
@@ -40,9 +45,28 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
         """READ BARCODE"""
 
+        Scanner()
+
         """HALL TURN IN"""
+        myRobot.m_motorL.on(-20)
+        myRobot.m_motorR.on(-20)
+        time.sleep(1.3)
+        myRobot.m_motorL.stop()
+        myRobot.m_motorR.stop()
+        myRobot.HallTurn(True, Target_Container)
+        myRobot.m_motorL.on(10)
+        myRobot.m_motorR.on(10)
+        time.sleep(.1)
+        myRobot.m_motorL.stop()
+        myRobot.m_motorR.stop()
+
         """RAISE LIFT"""
+        myLift = Lift()
+        myLift.RaiseLift()
+
         """HALL TURN OUT"""
+        time.sleep(.1)
+        myRobot.HallTurn(False, Target_Container)
 
         APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_B_X - Target_Container_x)
 
@@ -55,6 +79,13 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
             APR.moveDistance(Target_Container_y-DistanceModifier)
 
             """LOWER LIFT"""
+            myLift.LowerLift()
+            myRobot.m_motorL.on(-30)
+            myRobot.m_motorR.on(-30)
+            time.sleep(.5)
+            myRobot.m_motorL.stop()
+            myRobot.m_motorR.stop()
+
 
             # Slightly back away from the center
             APR.MoveReverse(10)
@@ -99,6 +130,13 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
             APR.moveDistance(Transition_y)
 
             """LOWER LIFT"""
+            myLift.LowerLift()
+            myRobot.m_motorL.on(-30)
+            myRobot.m_motorR.on(-30)
+            time.sleep(.5)
+            myRobot.m_motorL.stop()
+            myRobot.m_motorR.stop()
+
 
             # Slightly back away from the center
             APR.MoveReverse(Transition_y)
@@ -122,6 +160,13 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
             APR.moveDistance(FULFILLMENT_CENTER_D_Y - Target_Container_y - DistanceModifier)
 
             """LOWER LIFT"""
+            myLift.LowerLift()
+            myRobot.m_motorL.on(-30)
+            myRobot.m_motorR.on(-30)
+            time.sleep(.5)
+            myRobot.m_motorL.stop()
+            myRobot.m_motorR.stop()
+
 
             # Slightly back away from the center
             APR.MoveReverse(10)
@@ -167,9 +212,29 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
 
         """READ BARCODE"""
 
+        Scanner()
+
         """HALL TURN IN"""
+        myRobot = APR_Location()
+        myRobot.m_motorL.on(-20)
+        myRobot.m_motorR.on(-20)
+        time.sleep(1.3)
+        myRobot.m_motorL.stop()
+        myRobot.m_motorR.stop()
+        myRobot.HallTurn(True, Target_Container)
+        myRobot.m_motorL.on(10)
+        myRobot.m_motorR.on(10)
+        time.sleep(.1)
+        myRobot.m_motorL.stop()
+        myRobot.m_motorR.stop()
+
         """RAISE LIFT"""
+        myLift = Lift()
+        myLift.RaiseLift()
+
         """HALL TURN OUT"""
+        time.sleep(.1)
+        myRobot.HallTurn(False, Target_Container)
 
         APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_B_X - Target_Container_x)
 
@@ -195,6 +260,13 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
             APR.moveDistance(Transition_y)
 
             """LOWER LIFT"""
+            myLift.LowerLift()
+            myRobot.m_motorL.on(-30)
+            myRobot.m_motorR.on(-30)
+            time.sleep(.5)
+            myRobot.m_motorL.stop()
+            myRobot.m_motorR.stop()
+
 
             # Slightly back away from the center
             APR.MoveReverse(Transition_y)
@@ -225,6 +297,13 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
             APR.moveDistance(ALL_CONTAINERS.FULFILLMENT_CENTER_C_Y - Target_Container_y - DistanceModifier)
 
             """LOWER LIFT"""
+            myLift.LowerLift()
+            myRobot.m_motorL.on(-30)
+            myRobot.m_motorR.on(-30)
+            time.sleep(.5)
+            myRobot.m_motorL.stop()
+            myRobot.m_motorR.stop()
+
             
             # Slightly back away from the center
             APR.MoveReverse(Transition_y)
@@ -263,6 +342,13 @@ def FullTrack_FD(SHELVING_AREA, CONTAINER_NUMBER, BARCODE_TYPE, FULFILLMENT_CENT
             APR.moveDistance(Transition_y)
 
             """LOWER LIFT"""
+            myLift.LowerLift()
+            myRobot.m_motorL.on(-30)
+            myRobot.m_motorR.on(-30)
+            time.sleep(.5)
+            myRobot.m_motorL.stop()
+            myRobot.m_motorR.stop()
+
 
             # Slightly back away from the center
             APR.MoveReverse(Transition_y)
